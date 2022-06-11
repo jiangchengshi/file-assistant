@@ -92,9 +92,9 @@ subprojects {
                 // 添加 pom 相关信息
                 // https://docs.gradle.org/current/dsl/org.gradle.api.publish.maven.MavenPublication.html
                 pom {
-                    name = "mqtt-assistant"
-                    description = "Mybatis Assistant"
-                    url = "https://github.com/jiangchengshi/mqtt-assistant"
+                    name = "file-assistant"
+                    description = "File Assistant"
+                    url = "https://github.com/jiangchengshi/file-assistant"
                     licenses {
                         license {
                             name = "The Apache License, Version 2.0"
@@ -110,9 +110,9 @@ subprojects {
                     }
                     // 版本控制仓库地址
                     scm {
-                        url = 'https://github.com/jiangchengshi/mqtt-assistant.git'
-                        connection = 'scm:git:git://github.com/jiangchengshi/mqtt-assistant.git'
-                        developerConnection = 'scm:git:ssh://git@github.com:jiangchengshi/mqtt-assistant.git'
+                        url = 'https://github.com/jiangchengshi/file-assistant.git'
+                        connection = 'scm:git:git://github.com/jiangchengshi/file-assistant.git'
+                        developerConnection = 'scm:git:ssh://git@github.com:jiangchengshi/file-assistant.git'
                     }
                 }
             }
