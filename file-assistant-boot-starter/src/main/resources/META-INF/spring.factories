@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+cool.doudou.file.assistant.boot.starter.auto.configuration.FileAutoConfiguration

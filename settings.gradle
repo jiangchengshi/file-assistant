@@ -1,0 +1,4 @@
+rootProject.name = 'file-assistant'
+
+include 'file-assistant-core'
+include 'file-assistant-boot-starter'

@@ -1,0 +1,103 @@
+{
+  "groups": [
+    {
+      "name": "file",
+      "sourceType": "cool.doudou.celery.common.file.properties.FileProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "file.storage-mode",
+      "type": "java.lang.String",
+      "description": "存储方式",
+      "sourceType": "cool.doudou.celery.common.file.properties.FileProperties",
+      "defaultValue": false
+    },
+    {
+      "name": "file.local.path",
+      "type": "java.lang.String",
+      "description": "本地存储路径",
+      "sourceType": "cool.doudou.celery.common.file.properties.LocalProperties",
+      "defaultValue": "/home/assets/file"
+    },
+    {
+      "name": "file.grid-fs.connection-string",
+      "type": "java.lang.String",
+      "description": "mongodb链接字符串",
+      "sourceType": "cool.doudou.celery.common.file.properties.GridFsProperties",
+      "defaultValue": "mongodb://admin:1234.abcd@127.0.0.1:6379/files"
+    },
+    {
+      "name": "file.grid-fs.server-uri",
+      "type": "java.lang.String",
+      "description": "mongodb服务Uri",
+      "sourceType": "cool.doudou.celery.common.file.properties.GridFsProperties",
+      "defaultValue": "mongodb://admin:1234.abcd@127.0.0.1:6379"
+    },
+    {
+      "name": "file.grid-fs.database",
+      "type": "java.lang.String",
+      "description": "mongodb数据库",
+      "sourceType": "cool.doudou.celery.common.file.properties.GridFsProperties",
+      "defaultValue": "files"
+    },
+    {
+      "name": "file.grid-fs.bucket-name",
+      "type": "java.lang.String",
+      "description": "mongodb桶名称",
+      "sourceType": "cool.doudou.celery.common.file.properties.GridFsProperties",
+      "defaultValue": "default"
+    },
+    {
+      "name": "file.ali-yun.endpoint",
+      "type": "java.lang.String",
+      "description": "阿里云Bucket所在地域对应的Endpoint",
+      "sourceType": "cool.doudou.celery.common.file.properties.AliYunProperties",
+      "defaultValue": "https://oss-cn-hangzhou.aliyuncs.com"
+    },
+    {
+      "name": "file.ali-yun.access-key-id",
+      "type": "java.lang.String",
+      "description": "阿里云账号Id",
+      "sourceType": "cool.doudou.celery.common.file.properties.AliYunProperties",
+      "defaultValue": ""
+    },
+    {
+      "name": "file.ali-yun.access-key-secret",
+      "type": "java.lang.String",
+      "description": "阿里云账号Secret",
+      "sourceType": "cool.doudou.celery.common.file.properties.AliYunProperties",
+      "defaultValue": ""
+    },
+    {
+      "name": "file.ali-yun.bucket-name",
+      "type": "java.lang.String",
+      "description": "阿里云桶名称",
+      "sourceType": "cool.doudou.celery.common.file.properties.AliYunProperties",
+      "defaultValue": "default"
+    }
+  ],
+  "hints": [
+    {
+      "name": "file.storage-mode",
+      "values": [
+        {
+          "value": "local",
+          "description": "服务器本地"
+        },
+        {
+          "value": "gridFs",
+          "description": "GridFS"
+        },
+        {
+          "value": "aliYun",
+          "description": "阿里云"
+        },
+        {
+          "value": "minIO",
+          "description": "MinIO"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+description("Starter")
+
+dependencies {
+    api project(":file-assistant-core")
+
+    implementation("org.springframework.boot:spring-boot-autoconfigure")
+}

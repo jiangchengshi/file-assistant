@@ -1,0 +1,132 @@
+package cool.doudou.celery.common.file.helper;
+
+import cool.doudou.celery.common.file.Constant;
+import cool.doudou.celery.common.file.entity.FileResult;
+import cool.doudou.celery.common.file.util.IoUtil;
+import com.mongodb.BasicDBObject;
+import com.mongodb.client.gridfs.GridFSBucket;
+import com.mongodb.client.gridfs.GridFSFindIterable;
+import com.mongodb.client.gridfs.model.GridFSFile;
+import com.mongodb.client.gridfs.model.GridFSUploadOptions;
+import lombok.extern.slf4j.Slf4j;
+import org.bson.Document;
+import org.bson.types.ObjectId;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.FileNotFoundException;
+
+/**
+ * FileHelper
+ *
+ * @author jiangcs
+ * @since 2022/2/16
+ */
+@Slf4j
+@ConditionalOnProperty(name = "file.storage-mode", havingValue = "gridFs")
+public class GridFsHelper implements FileHelper {
+    private GridFSBucket gridFsBucket;
+
+    @Override
+    public FileResult upload(MultipartFile file) {
+        return upload(file, Constant.CATEGORY_DEFAULT);
+    }
+
+    @Override
+    public FileResult upload(MultipartFile file, String category) {
+        try {
+            String filename = file.getOriginalFilename();
+            if (filename == null) {
+                throw new IllegalArgumentException("文件名字为空");
+            }
+
+            // 存储至 gridFs
+            ObjectId objectId = gridFsBucket.uploadFromStream(
+                    filename,
+                    file.getInputStream(),
+                    new GridFSUploadOptions().metadata(new Document("category", category))
+            );
+            return FileResult.ok(objectId.toString(), filename, file.getContentType());
+        } catch (Exception e) {
+            log.error("文件上传异常: {}", e.getMessage());
+        }
+        return null;
+    }
+
+    @Override
+    public void download(String key, HttpServletResponse response) {
+        download(key, Constant.CATEGORY_DEFAULT, response);
+    }
+
+    @Override
+    public void download(String key, String category, HttpServletResponse response) {
+        try {
+            this.check(key, category);
+
+            IoUtil.setContentDisposition4Download(response, key);
+            gridFsBucket.downloadToStream(new ObjectId(key), response.getOutputStream());
+        } catch (Exception e) {
+            log.error("文件下载异常: {}", e.getMessage());
+        }
+    }
+
+    @Override
+    public void preview(String key, HttpServletResponse response) {
+        preview(key, Constant.CATEGORY_DEFAULT, response);
+    }
+
+    @Override
+    public void preview(String key, String category, HttpServletResponse response) {
+        try {
+            this.check(key, category);
+
+            IoUtil.setContentDisposition4Preview(response, key);
+            gridFsBucket.downloadToStream(new ObjectId(key), response.getOutputStream());
+        } catch (Exception e) {
+            log.error("文件下载异常: {}", e.getMessage());
+        }
+    }
+
+    @Override
+    public boolean delete(String key) {
+        return delete(key, Constant.CATEGORY_DEFAULT);
+    }
+
+    @Override
+    public boolean delete(String key, String category) {
+        try {
+            this.check(key, category);
+
+            gridFsBucket.delete(new ObjectId(key));
+            return true;
+        } catch (Exception e) {
+            log.error("文件删除异常: {}", e.getMessage());
+        }
+        return false;
+    }
+
+    /**
+     * 检查文件是否存在
+     *
+     * @param key      文件键值
+     * @param category 分类
+     * @throws Exception 异常
+     */
+    public void check(String key, String category) throws Exception {
+        GridFSFindIterable gridFsIterable = gridFsBucket.find(
+                new BasicDBObject("_id", new ObjectId(key))
+                        .append("metadata.category", category)
+        );
+        GridFSFile gridFsFile = gridFsIterable.first();
+        if (gridFsFile == null) {
+            throw new FileNotFoundException("文件不存在：" + key);
+        }
+    }
+
+    @Autowired
+    public void setGridFsBucket(GridFSBucket gridFsBucket) {
+        this.gridFsBucket = gridFsBucket;
+    }
+}
