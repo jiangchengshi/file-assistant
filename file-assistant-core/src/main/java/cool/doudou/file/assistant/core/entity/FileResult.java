@@ -1,4 +1,4 @@
-package cool.doudou.celery.common.file.entity;
+package cool.doudou.file.assistant.core.entity;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

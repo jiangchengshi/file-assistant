@@ -1,4 +1,4 @@
-package cool.doudou.celery.common.file.util;
+package cool.doudou.file.assistant.core.util;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;

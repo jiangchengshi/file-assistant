@@ -2,7 +2,7 @@
   "groups": [
     {
       "name": "file",
-      "sourceType": "cool.doudou.celery.common.file.properties.FileProperties"
+      "sourceType": "cool.doudou.file.assistant.core.properties.FileProperties"
     }
   ],
   "properties": [
@@ -10,70 +10,91 @@
       "name": "file.storage-mode",
       "type": "java.lang.String",
       "description": "存储方式",
-      "sourceType": "cool.doudou.celery.common.file.properties.FileProperties",
-      "defaultValue": false
+      "sourceType": "cool.doudou.file.assistant.core.properties.FileProperties",
+      "defaultValue": "local"
     },
     {
       "name": "file.local.path",
       "type": "java.lang.String",
       "description": "本地存储路径",
-      "sourceType": "cool.doudou.celery.common.file.properties.LocalProperties",
+      "sourceType": "cool.doudou.file.assistant.core.properties.LocalProperties",
       "defaultValue": "/home/assets/file"
-    },
-    {
-      "name": "file.grid-fs.connection-string",
-      "type": "java.lang.String",
-      "description": "mongodb链接字符串",
-      "sourceType": "cool.doudou.celery.common.file.properties.GridFsProperties",
-      "defaultValue": "mongodb://admin:1234.abcd@127.0.0.1:6379/files"
     },
     {
       "name": "file.grid-fs.server-uri",
       "type": "java.lang.String",
       "description": "mongodb服务Uri",
-      "sourceType": "cool.doudou.celery.common.file.properties.GridFsProperties",
+      "sourceType": "cool.doudou.file.assistant.core.properties.GridFsProperties",
       "defaultValue": "mongodb://admin:1234.abcd@127.0.0.1:6379"
     },
     {
       "name": "file.grid-fs.database",
       "type": "java.lang.String",
       "description": "mongodb数据库",
-      "sourceType": "cool.doudou.celery.common.file.properties.GridFsProperties",
+      "sourceType": "cool.doudou.file.assistant.core.properties.GridFsProperties",
       "defaultValue": "files"
     },
     {
       "name": "file.grid-fs.bucket-name",
       "type": "java.lang.String",
       "description": "mongodb桶名称",
-      "sourceType": "cool.doudou.celery.common.file.properties.GridFsProperties",
+      "sourceType": "cool.doudou.file.assistant.core.properties.GridFsProperties",
       "defaultValue": "default"
     },
     {
       "name": "file.ali-yun.endpoint",
       "type": "java.lang.String",
       "description": "阿里云Bucket所在地域对应的Endpoint",
-      "sourceType": "cool.doudou.celery.common.file.properties.AliYunProperties",
+      "sourceType": "cool.doudou.file.assistant.core.properties.AliYunProperties",
       "defaultValue": "https://oss-cn-hangzhou.aliyuncs.com"
     },
     {
       "name": "file.ali-yun.access-key-id",
       "type": "java.lang.String",
       "description": "阿里云账号Id",
-      "sourceType": "cool.doudou.celery.common.file.properties.AliYunProperties",
+      "sourceType": "cool.doudou.file.assistant.core.properties.AliYunProperties",
       "defaultValue": ""
     },
     {
       "name": "file.ali-yun.access-key-secret",
       "type": "java.lang.String",
       "description": "阿里云账号Secret",
-      "sourceType": "cool.doudou.celery.common.file.properties.AliYunProperties",
+      "sourceType": "cool.doudou.file.assistant.core.properties.AliYunProperties",
       "defaultValue": ""
     },
     {
       "name": "file.ali-yun.bucket-name",
       "type": "java.lang.String",
       "description": "阿里云桶名称",
-      "sourceType": "cool.doudou.celery.common.file.properties.AliYunProperties",
+      "sourceType": "cool.doudou.file.assistant.core.properties.AliYunProperties",
+      "defaultValue": "default"
+    },
+    {
+      "name": "file.min-io.endpoint",
+      "type": "java.lang.String",
+      "description": "MinIO服务所在地址",
+      "sourceType": "cool.doudou.file.assistant.core.properties.MinIoProperties",
+      "defaultValue": "http://127.0.0.1:9000"
+    },
+    {
+      "name": "file.min-io.access-key",
+      "type": "java.lang.String",
+      "description": "MinIO访问key",
+      "sourceType": "cool.doudou.file.assistant.core.properties.MinIoProperties",
+      "defaultValue": ""
+    },
+    {
+      "name": "file.min-io.secret-key",
+      "type": "java.lang.String",
+      "description": "MinIO访问秘钥",
+      "sourceType": "cool.doudou.file.assistant.core.properties.MinIoProperties",
+      "defaultValue": ""
+    },
+    {
+      "name": "file.min-io.bucket-name",
+      "type": "java.lang.String",
+      "description": "MinIO桶名称",
+      "sourceType": "cool.doudou.file.assistant.core.properties.MinIoProperties",
       "defaultValue": "default"
     }
   ],

@@ -1,9 +1,10 @@
-package cool.doudou.celery.common.file.helper;
+package cool.doudou.file.assistant.core.helper;
 
-import cool.doudou.celery.common.file.Constant;
-import cool.doudou.celery.common.file.entity.FileResult;
-import cool.doudou.celery.common.file.properties.LocalProperties;
-import cool.doudou.celery.common.file.util.IoUtil;
+import cool.doudou.file.assistant.core.Constant;
+import cool.doudou.file.assistant.core.entity.FileResult;
+import cool.doudou.file.assistant.core.properties.LocalProperties;
+import cool.doudou.file.assistant.core.util.ComUtil;
+import cool.doudou.file.assistant.core.util.IoUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -15,7 +16,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.UUID;
 
 /**
  * LocalHelper
@@ -45,7 +45,7 @@ public class LocalHelper implements FileHelper {
                 throw new RuntimeException("文件名称异常");
             }
 
-            String key = UUID.randomUUID().toString().replaceAll("-", "");
+            String key = ComUtil.getFileKey(filename, true);
             Path path = Files.createFile(parentPath.resolve(key));
 
             // 复制至 服务器本地
@@ -53,9 +53,8 @@ public class LocalHelper implements FileHelper {
 
             return FileResult.ok(key, filename, file.getContentType());
         } catch (Exception e) {
-            log.error("文件上传异常: ", e);
+            throw new RuntimeException("文件上传异常 ", e);
         }
-        return null;
     }
 
     @Override
@@ -72,7 +71,7 @@ public class LocalHelper implements FileHelper {
             IoUtil.setContentDisposition4Download(response, key);
             IoUtil.write(resource.getInputStream(), response.getOutputStream());
         } catch (Exception e) {
-            log.error("文件下载异常: {}", e.getMessage());
+            throw new RuntimeException("文件下载异常", e);
         }
     }
 
@@ -90,7 +89,7 @@ public class LocalHelper implements FileHelper {
             IoUtil.setContentDisposition4Preview(response, key);
             IoUtil.write(resource.getInputStream(), response.getOutputStream());
         } catch (Exception e) {
-            log.error("文件预览异常: {}", e.getMessage());
+            throw new RuntimeException("文件预览异常", e);
         }
     }
 
@@ -106,9 +105,8 @@ public class LocalHelper implements FileHelper {
 
             return Files.deleteIfExists(path);
         } catch (Exception e) {
-            log.error("文件删除异常: {}", e.getMessage());
+            throw new RuntimeException("文件删除异常", e);
         }
-        return false;
     }
 
     /**

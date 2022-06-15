@@ -1,4 +1,4 @@
-package cool.doudou.celery.common.file.properties;
+package cool.doudou.file.assistant.core.properties;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -10,7 +10,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @since 2022/3/6
  */
 @Data
-@ConfigurationProperties(prefix = "file.gridfs")
 public class GridFsProperties {
     private String serverUri = "mongodb://admin:1234.abcd@127.0.0.1:6379";
     private String database = "files";

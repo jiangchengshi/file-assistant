@@ -1,6 +1,6 @@
-package cool.doudou.celery.common.file.helper;
+package cool.doudou.file.assistant.core.helper;
 
-import cool.doudou.celery.common.file.entity.FileResult;
+import cool.doudou.file.assistant.core.entity.FileResult;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
