@@ -1,4 +1,4 @@
-package cool.doudou.celery.common.file;
+package cool.doudou.file.assistant.core;
 
 /**
  * Constant

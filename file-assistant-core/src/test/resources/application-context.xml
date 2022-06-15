@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="localProperties" class="cool.doudou.file.assistant.core.properties.LocalProperties">
+        <property name="path" value="./tmp"/>
+    </bean>
+    <bean id="minIoProperties" class="cool.doudou.file.assistant.core.properties.MinIoProperties">
+        <property name="endpoint" value="http://192.168.0.158:9000"/>
+        <property name="accessKey" value="test"/>
+        <property name="secretKey" value="1234.abcd"/>
+        <property name="bucketName" value="test"/>
+    </bean>
+</beans>

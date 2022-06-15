@@ -40,3 +40,4 @@ out/
 gradle.properties
 .DS_Store
 /gradle-publish/
+/file-assistant-core/tmp/

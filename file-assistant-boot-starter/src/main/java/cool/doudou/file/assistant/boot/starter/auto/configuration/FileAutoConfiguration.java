@@ -1,14 +1,10 @@
 package cool.doudou.file.assistant.boot.starter.auto.configuration;
 
-import cool.doudou.celery.common.file.config.AliYunConfig;
-import cool.doudou.celery.common.file.config.GridFsConfig;
-import cool.doudou.celery.common.file.enums.StorageModeEnum;
-import cool.doudou.celery.common.file.helper.*;
-import cool.doudou.celery.common.file.properties.AliYunProperties;
-import cool.doudou.celery.common.file.properties.FileProperties;
-import cool.doudou.celery.common.file.properties.GridFsProperties;
-import cool.doudou.celery.common.file.properties.LocalProperties;
-import cool.doudou.celery.common.file.helper.*;
+import cool.doudou.file.assistant.core.config.AliYunConfig;
+import cool.doudou.file.assistant.core.config.GridFsConfig;
+import cool.doudou.file.assistant.core.enums.StorageModeEnum;
+import cool.doudou.file.assistant.core.helper.*;
+import cool.doudou.file.assistant.core.properties.FileProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -22,7 +18,7 @@ import org.springframework.context.annotation.Import;
  * @author jiangcs
  * @since 2022/2/16
  */
-@EnableConfigurationProperties({FileProperties.class, LocalProperties.class, GridFsProperties.class, AliYunProperties.class})
+@EnableConfigurationProperties({FileProperties.class})
 @Import({GridFsConfig.class, AliYunConfig.class})
 @Configuration
 public class FileAutoConfiguration {
@@ -37,7 +33,7 @@ public class FileAutoConfiguration {
             case ALI_YUN:
                 return new AliYunHelper();
             case MINIO:
-                return new MinIoHelper();
+                return new MinIOHelper();
             default:
                 return new LocalHelper();
         }

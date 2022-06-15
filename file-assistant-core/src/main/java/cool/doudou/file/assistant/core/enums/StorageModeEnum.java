@@ -1,4 +1,4 @@
-package cool.doudou.celery.common.file.enums;
+package cool.doudou.file.assistant.core.enums;
 
 import lombok.AllArgsConstructor;
 

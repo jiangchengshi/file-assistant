@@ -1,6 +1,6 @@
-package cool.doudou.celery.common.file.config;
+package cool.doudou.file.assistant.core.config;
 
-import cool.doudou.celery.common.file.properties.GridFsProperties;
+import cool.doudou.file.assistant.core.properties.GridFsProperties;
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;

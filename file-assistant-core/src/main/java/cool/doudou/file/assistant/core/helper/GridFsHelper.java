@@ -1,13 +1,13 @@
-package cool.doudou.celery.common.file.helper;
+package cool.doudou.file.assistant.core.helper;
 
-import cool.doudou.celery.common.file.Constant;
-import cool.doudou.celery.common.file.entity.FileResult;
-import cool.doudou.celery.common.file.util.IoUtil;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.gridfs.GridFSBucket;
 import com.mongodb.client.gridfs.GridFSFindIterable;
 import com.mongodb.client.gridfs.model.GridFSFile;
 import com.mongodb.client.gridfs.model.GridFSUploadOptions;
+import cool.doudou.file.assistant.core.Constant;
+import cool.doudou.file.assistant.core.entity.FileResult;
+import cool.doudou.file.assistant.core.util.IoUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -50,9 +50,8 @@ public class GridFsHelper implements FileHelper {
             );
             return FileResult.ok(objectId.toString(), filename, file.getContentType());
         } catch (Exception e) {
-            log.error("文件上传异常: {}", e.getMessage());
+            throw new RuntimeException("文件上传异常 ", e);
         }
-        return null;
     }
 
     @Override
@@ -68,7 +67,7 @@ public class GridFsHelper implements FileHelper {
             IoUtil.setContentDisposition4Download(response, key);
             gridFsBucket.downloadToStream(new ObjectId(key), response.getOutputStream());
         } catch (Exception e) {
-            log.error("文件下载异常: {}", e.getMessage());
+            throw new RuntimeException("文件下载异常 ", e);
         }
     }
 
@@ -85,7 +84,7 @@ public class GridFsHelper implements FileHelper {
             IoUtil.setContentDisposition4Preview(response, key);
             gridFsBucket.downloadToStream(new ObjectId(key), response.getOutputStream());
         } catch (Exception e) {
-            log.error("文件下载异常: {}", e.getMessage());
+            throw new RuntimeException("文件预览异常 ", e);
         }
     }
 
@@ -102,9 +101,8 @@ public class GridFsHelper implements FileHelper {
             gridFsBucket.delete(new ObjectId(key));
             return true;
         } catch (Exception e) {
-            log.error("文件删除异常: {}", e.getMessage());
+            throw new RuntimeException("文件删除异常 ", e);
         }
-        return false;
     }
 
     /**

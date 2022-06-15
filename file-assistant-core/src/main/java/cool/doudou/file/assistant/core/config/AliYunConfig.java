@@ -1,10 +1,10 @@
-package cool.doudou.celery.common.file.config;
+package cool.doudou.file.assistant.core.config;
 
 import com.aliyun.oss.ClientException;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.OSSException;
-import cool.doudou.celery.common.file.properties.AliYunProperties;
+import cool.doudou.file.assistant.core.properties.AliYunProperties;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
