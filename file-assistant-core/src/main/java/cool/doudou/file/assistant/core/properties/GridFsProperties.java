@@ -10,6 +10,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @since 2022/3/6
  */
 @Data
+@ConfigurationProperties(prefix = "file.grid-fs")
 public class GridFsProperties {
     private String serverUri = "mongodb://admin:1234.abcd@127.0.0.1:6379";
     private String database = "files";
