@@ -14,6 +14,8 @@ dependencies {
     implementation("org.glassfish.jaxb:jaxb-runtime:2.3.3")
     // minIO
     implementation("io.minio:minio:${depVersion.minIO}")
+    // minIO-dependency
+    implementation("com.squareup.okhttp3:okhttp:4.10.0")
 
     // HttpServletResponse
     compileOnly("javax.servlet:javax.servlet-api:4.0.1")
