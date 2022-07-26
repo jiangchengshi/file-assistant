@@ -7,10 +7,10 @@ import cool.doudou.file.assistant.core.enums.StorageModeEnum;
 import cool.doudou.file.assistant.core.helper.*;
 import cool.doudou.file.assistant.core.properties.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 /**
@@ -21,11 +21,11 @@ import org.springframework.context.annotation.Import;
  */
 @EnableConfigurationProperties({FileProperties.class, GridFsProperties.class, AliYunProperties.class, MinIoProperties.class, LocalProperties.class})
 @Import({GridFsConfig.class, AliYunConfig.class, MinIOConfig.class})
-@Configuration
+@AutoConfiguration
 public class FileAutoConfiguration {
     private FileProperties fileProperties;
 
-    @ConditionalOnMissingBean(FileHelper.class)
+    @ConditionalOnMissingBean
     @Bean
     public FileHelper fileHelper() {
         switch (StorageModeEnum.getByName(fileProperties.getStorageMode())) {

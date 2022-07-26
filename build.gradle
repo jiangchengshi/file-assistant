@@ -46,6 +46,11 @@ subprojects {
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
 
+    configurations {
+        all*.exclude group: "spring-boot-starter-logging"
+        all*.exclude module: "spring-boot-starter-tomcat"
+    }
+
     // 依赖管理
     dependencyManagement {
         imports {
