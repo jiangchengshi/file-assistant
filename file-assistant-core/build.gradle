@@ -3,6 +3,7 @@ description("核心包")
 dependencies {
     implementation("org.springframework.boot:spring-boot-autoconfigure")
     implementation("org.springframework:spring-web")
+    implementation("org.springframework:spring-test")
 
     // mongodb
     implementation("org.mongodb:mongodb-driver:${depVersion.mongodb}")

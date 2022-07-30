@@ -14,6 +14,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -29,13 +30,18 @@ public class AliYunHelper implements FileHelper {
     private OSSClient ossClient;
 
     @Override
-    public FileResult upload(MultipartFile file) {
+    public FileResult upload(MultipartFile multipartFile) {
+        return upload(multipartFile, Constant.CATEGORY_DEFAULT);
+    }
+
+    @Override
+    public FileResult upload(File file) {
         return upload(file, Constant.CATEGORY_DEFAULT);
     }
 
     @Override
-    public FileResult upload(MultipartFile file, String category) {
-        String filename = file.getOriginalFilename();
+    public FileResult upload(MultipartFile multipartFile, String category) {
+        String filename = multipartFile.getOriginalFilename();
         if (filename == null) {
             throw new RuntimeException("文件名称异常");
         }
@@ -44,11 +50,20 @@ public class AliYunHelper implements FileHelper {
             String key = ComUtil.getFileKey(filename, true);
             ObjectMetadata objectMetadata = new ObjectMetadata();
             objectMetadata.addUserMetadata("category", category);
-            ossClient.putObject(aliYunProperties.getBucketName(), key, file.getInputStream(), objectMetadata);
+            ossClient.putObject(aliYunProperties.getBucketName(), key, multipartFile.getInputStream(), objectMetadata);
 
-            return FileResult.ok(key, filename, file.getContentType());
+            return FileResult.ok(key, filename, multipartFile.getContentType());
         } catch (IOException e) {
             throw new RuntimeException("文件上传异常 ", e);
+        }
+    }
+
+    @Override
+    public FileResult upload(File file, String category) {
+        try {
+            return upload(ComUtil.file2MultipartFile(file), category);
+        } catch (Exception e) {
+            throw new RuntimeException("文件转换异常");
         }
     }
 

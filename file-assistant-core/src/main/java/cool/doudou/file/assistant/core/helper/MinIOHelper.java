@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,13 +30,18 @@ public class MinIOHelper implements FileHelper {
     private MinioClient minioClient;
 
     @Override
-    public FileResult upload(MultipartFile file) {
+    public FileResult upload(MultipartFile multipartFile) {
+        return upload(multipartFile, Constant.CATEGORY_DEFAULT);
+    }
+
+    @Override
+    public FileResult upload(File file) {
         return upload(file, Constant.CATEGORY_DEFAULT);
     }
 
     @Override
-    public FileResult upload(MultipartFile file, String category) {
-        String filename = file.getOriginalFilename();
+    public FileResult upload(MultipartFile multipartFile, String category) {
+        String filename = multipartFile.getOriginalFilename();
         if (filename == null) {
             throw new RuntimeException("文件名称异常");
         }
@@ -46,16 +52,25 @@ public class MinIOHelper implements FileHelper {
             userMetadata.put("category", category);
             PutObjectArgs objectArgs = PutObjectArgs.builder().bucket(minIoProperties.getBucketName())
                     .object(key)
-                    .stream(file.getInputStream(), file.getSize(), -1)
-                    .contentType(file.getContentType())
+                    .stream(multipartFile.getInputStream(), multipartFile.getSize(), -1)
+                    .contentType(multipartFile.getContentType())
                     .userMetadata(userMetadata)
                     .build();
             // 文件名称相同会覆盖
             minioClient.putObject(objectArgs);
 
-            return FileResult.ok(key, filename, file.getContentType());
+            return FileResult.ok(key, filename, multipartFile.getContentType());
         } catch (Exception e) {
             throw new RuntimeException("文件上传异常 ", e);
+        }
+    }
+
+    @Override
+    public FileResult upload(File file, String category) {
+        try {
+            return upload(ComUtil.file2MultipartFile(file), category);
+        } catch (Exception e) {
+            throw new RuntimeException("文件转换异常");
         }
     }
 
