@@ -7,6 +7,7 @@ import com.mongodb.client.gridfs.model.GridFSFile;
 import com.mongodb.client.gridfs.model.GridFSUploadOptions;
 import cool.doudou.file.assistant.core.Constant;
 import cool.doudou.file.assistant.core.entity.FileResult;
+import cool.doudou.file.assistant.core.util.ComUtil;
 import cool.doudou.file.assistant.core.util.IoUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.Document;
@@ -16,6 +17,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.FileNotFoundException;
 
 /**
@@ -30,14 +32,19 @@ public class GridFsHelper implements FileHelper {
     private GridFSBucket gridFsBucket;
 
     @Override
-    public FileResult upload(MultipartFile file) {
+    public FileResult upload(MultipartFile multipartFile) {
+        return upload(multipartFile, Constant.CATEGORY_DEFAULT);
+    }
+
+    @Override
+    public FileResult upload(File file) {
         return upload(file, Constant.CATEGORY_DEFAULT);
     }
 
     @Override
-    public FileResult upload(MultipartFile file, String category) {
+    public FileResult upload(MultipartFile multipartFile, String category) {
         try {
-            String filename = file.getOriginalFilename();
+            String filename = multipartFile.getOriginalFilename();
             if (filename == null) {
                 throw new IllegalArgumentException("文件名字为空");
             }
@@ -45,12 +52,21 @@ public class GridFsHelper implements FileHelper {
             // 存储至 gridFs
             ObjectId objectId = gridFsBucket.uploadFromStream(
                     filename,
-                    file.getInputStream(),
+                    multipartFile.getInputStream(),
                     new GridFSUploadOptions().metadata(new Document("category", category))
             );
-            return FileResult.ok(objectId.toString(), filename, file.getContentType());
+            return FileResult.ok(objectId.toString(), filename, multipartFile.getContentType());
         } catch (Exception e) {
             throw new RuntimeException("文件上传异常 ", e);
+        }
+    }
+
+    @Override
+    public FileResult upload(File file, String category) {
+        try {
+            return upload(ComUtil.file2MultipartFile(file), category);
+        } catch (Exception e) {
+            throw new RuntimeException("文件转换异常");
         }
     }
 

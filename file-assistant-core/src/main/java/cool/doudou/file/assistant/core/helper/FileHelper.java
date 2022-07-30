@@ -4,6 +4,7 @@ import cool.doudou.file.assistant.core.entity.FileResult;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 
 /**
  * FileHelper
@@ -15,10 +16,27 @@ public interface FileHelper {
     /**
      * 上传
      *
+     * @param multipartFile 表单格式文件
+     * @return FileResult
+     */
+    FileResult upload(MultipartFile multipartFile);
+
+    /**
+     * 上传
+     *
      * @param file 文件
      * @return FileResult
      */
-    FileResult upload(MultipartFile file);
+    FileResult upload(File file);
+
+    /**
+     * 上传
+     *
+     * @param multipartFile 表单格式文件
+     * @param category      类别
+     * @return FileResult
+     */
+    FileResult upload(MultipartFile multipartFile, String category);
 
     /**
      * 上传
@@ -27,7 +45,7 @@ public interface FileHelper {
      * @param category 类别
      * @return FileResult
      */
-    FileResult upload(MultipartFile file, String category);
+    FileResult upload(File file, String category);
 
     /**
      * 下载

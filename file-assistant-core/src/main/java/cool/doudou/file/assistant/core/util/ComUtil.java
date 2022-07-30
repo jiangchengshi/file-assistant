@@ -1,5 +1,10 @@
 package cool.doudou.file.assistant.core.util;
 
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.UUID;
 
 /**
@@ -22,5 +27,16 @@ public class ComUtil {
             key += filename.substring(filename.lastIndexOf("."));
         }
         return key;
+    }
+
+    /**
+     * File 2 MultipartFile
+     *
+     * @param file 文件
+     * @return 上传格式文件
+     * @throws Exception 异常
+     */
+    public static MultipartFile file2MultipartFile(File file) throws Exception {
+        return new MockMultipartFile(file.getName(), new FileInputStream(file));
     }
 }

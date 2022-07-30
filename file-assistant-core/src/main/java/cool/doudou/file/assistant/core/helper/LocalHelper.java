@@ -12,6 +12,7 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -28,19 +29,24 @@ public class LocalHelper implements FileHelper {
     private LocalProperties localProperties;
 
     @Override
-    public FileResult upload(MultipartFile file) {
+    public FileResult upload(MultipartFile multipartFile) {
+        return upload(multipartFile, Constant.CATEGORY_DEFAULT);
+    }
+
+    @Override
+    public FileResult upload(File file) {
         return upload(file, Constant.CATEGORY_DEFAULT);
     }
 
     @Override
-    public FileResult upload(MultipartFile file, String category) {
+    public FileResult upload(MultipartFile multipartFile, String category) {
         try {
             Path parentPath = Paths.get(localProperties.getPath(), category);
             if (Files.notExists(parentPath)) {
                 Files.createDirectories(parentPath);
             }
 
-            String filename = file.getOriginalFilename();
+            String filename = multipartFile.getOriginalFilename();
             if (filename == null) {
                 throw new RuntimeException("文件名称异常");
             }
@@ -49,11 +55,20 @@ public class LocalHelper implements FileHelper {
             Path path = Files.createFile(parentPath.resolve(key));
 
             // 复制至 服务器本地
-            Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(multipartFile.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
 
-            return FileResult.ok(key, filename, file.getContentType());
+            return FileResult.ok(key, filename, multipartFile.getContentType());
         } catch (Exception e) {
             throw new RuntimeException("文件上传异常 ", e);
+        }
+    }
+
+    @Override
+    public FileResult upload(File file, String category) {
+        try {
+            return upload(ComUtil.file2MultipartFile(file), category);
+        } catch (Exception e) {
+            throw new RuntimeException("文件转换异常");
         }
     }
 

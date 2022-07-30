@@ -1,6 +1,6 @@
 # 欢迎使用 File-Assistant
 
-[![Maven](https://img.shields.io/badge/Maven-v1.0.4-blue)](https://search.maven.org/search?q=g:cool.doudou%20a:file-assistant-*)
+[![Maven](https://img.shields.io/badge/Maven-v1.0.5-blue)](https://search.maven.org/search?q=g:cool.doudou%20a:file-assistant-*)
 [![License](https://img.shields.io/badge/License-Apache%202-4EB1BA.svg?style=flat-square)](https://www.apache.org/licenses/LICENSE-2.0)
 
 ## 简介
@@ -97,10 +97,27 @@ public interface FileHelper {
     /**
      * 上传
      *
+     * @param multipartFile 表单格式文件
+     * @return FileResult
+     */
+    FileResult upload(MultipartFile multipartFile);
+
+    /**
+     * 上传
+     *
      * @param file 文件
      * @return FileResult
      */
-    FileResult upload(MultipartFile file);
+    FileResult upload(File file);
+
+    /**
+     * 上传
+     *
+     * @param multipartFile 表单格式文件
+     * @param category      类别
+     * @return FileResult
+     */
+    FileResult upload(MultipartFile multipartFile, String category);
 
     /**
      * 上传
@@ -109,7 +126,7 @@ public interface FileHelper {
      * @param category 类别
      * @return FileResult
      */
-    FileResult upload(MultipartFile file, String category);
+    FileResult upload(File file, String category);
 
     /**
      * 下载
