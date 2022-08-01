@@ -41,6 +41,9 @@ public class AliYunHelper implements FileHelper {
 
     @Override
     public FileResult upload(MultipartFile multipartFile, String category) {
+        if (multipartFile == null) {
+            throw new RuntimeException("文件异常");
+        }
         String filename = multipartFile.getOriginalFilename();
         if (filename == null) {
             throw new RuntimeException("文件名称异常");
@@ -60,11 +63,14 @@ public class AliYunHelper implements FileHelper {
 
     @Override
     public FileResult upload(File file, String category) {
+        MultipartFile multipartFile;
         try {
-            return upload(ComUtil.file2MultipartFile(file), category);
+            multipartFile = ComUtil.file2MultipartFile(file);
         } catch (Exception e) {
             throw new RuntimeException("文件转换异常");
         }
+
+        return upload(multipartFile, category);
     }
 
     @Override

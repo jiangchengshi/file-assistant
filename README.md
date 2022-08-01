@@ -1,6 +1,6 @@
 # 欢迎使用 File-Assistant
 
-[![Maven](https://img.shields.io/badge/Maven-v1.0.5-blue)](https://search.maven.org/search?q=g:cool.doudou%20a:file-assistant-*)
+[![Maven](https://img.shields.io/badge/Maven-v1.0.6-blue)](https://search.maven.org/search?q=g:cool.doudou%20a:file-assistant-*)
 [![License](https://img.shields.io/badge/License-Apache%202-4EB1BA.svg?style=flat-square)](https://www.apache.org/licenses/LICENSE-2.0)
 
 ## 简介
@@ -16,7 +16,7 @@ File助手 - 简化配置，注解带飞！
 ### 引入依赖
 
 ```kotlin
-implementation("cool.doudou:file-assistant:latest")
+implementation("cool.doudou:file-assistant-boot-starter:latest")
 ```
 
 ### 使用方式
