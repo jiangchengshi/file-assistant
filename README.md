@@ -1,6 +1,6 @@
 # 欢迎使用 File-Assistant
 
-[![Maven](https://img.shields.io/badge/Maven-v1.0.6-blue)](https://search.maven.org/search?q=g:cool.doudou%20a:file-assistant-*)
+[![Maven](https://img.shields.io/badge/Maven-v1.0.7-blue)](https://search.maven.org/search?q=g:cool.doudou%20a:file-assistant-*)
 [![License](https://img.shields.io/badge/License-Apache%202-4EB1BA.svg?style=flat-square)](https://www.apache.org/licenses/LICENSE-2.0)
 
 ## 简介
@@ -23,8 +23,8 @@ implementation("cool.doudou:file-assistant-boot-starter:latest")
 
 > 上传文件大小，需要引入profiles：file
 
-- 单个文件：10MB
-- 总上传数据：50MB
+- 单个文件：50MB
+- 总上传数据：100MB
 
 ```yaml
 spring:

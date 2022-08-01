@@ -1,11 +1,15 @@
 package cool.doudou.file.assistant.core.util;
 
-import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockMultipartFile;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.UUID;
 
 /**
@@ -35,9 +39,27 @@ public class ComUtil {
      *
      * @param file 文件
      * @return 上传格式文件
-     * @throws Exception 异常
      */
-    public static MultipartFile file2MultipartFile(File file) throws Exception {
-        return new MockMultipartFile(file.getName(), file.getName(), MediaType.MULTIPART_FORM_DATA_VALUE, new FileInputStream(file));
+    public static MultipartFile file2MultipartFile(File file) {
+        return new CommonsMultipartFile(createFileItem(file));
+    }
+
+    private static FileItem createFileItem(File file) {
+        FileItemFactory factory = new DiskFileItemFactory(16, null);
+        FileItem item = factory.createItem(file.getName(), "text/plain", true, file.getName());
+        int bytesRead;
+        byte[] buffer = new byte[8192];
+        try {
+            FileInputStream fis = new FileInputStream(file);
+            OutputStream os = item.getOutputStream();
+            while ((bytesRead = fis.read(buffer, 0, 8192)) != -1) {
+                os.write(buffer, 0, bytesRead);
+            }
+            os.close();
+            fis.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return item;
     }
 }

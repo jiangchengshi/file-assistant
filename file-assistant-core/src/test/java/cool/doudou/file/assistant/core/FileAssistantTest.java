@@ -1,8 +1,16 @@
 package cool.doudou.file.assistant.core;
 
+import com.mongodb.ConnectionString;
+import com.mongodb.MongoClientSettings;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.gridfs.GridFSBucket;
+import com.mongodb.client.gridfs.GridFSBuckets;
 import cool.doudou.file.assistant.core.entity.FileResult;
+import cool.doudou.file.assistant.core.helper.GridFsHelper;
 import cool.doudou.file.assistant.core.helper.LocalHelper;
 import cool.doudou.file.assistant.core.helper.MinIOHelper;
+import cool.doudou.file.assistant.core.properties.GridFsProperties;
 import cool.doudou.file.assistant.core.properties.LocalProperties;
 import cool.doudou.file.assistant.core.properties.MinIoProperties;
 import io.minio.BucketExistsArgs;
@@ -34,6 +42,31 @@ public class FileAssistantTest {
             File file = new File("/Users/jiangcs/Downloads/1.txt");
             MultipartFile multipartFile = new MockMultipartFile("file", file.getName(), "text/plain", new FileInputStream(file));
             FileResult fileResult = localHelper.upload(multipartFile, "test");
+            System.out.println(fileResult);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void uploadGridFs() {
+        try {
+            ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("application-context.xml");
+
+            GridFsProperties gridFsProperties = applicationContext.getBean("gridFsProperties", GridFsProperties.class);
+
+            MongoClientSettings settings = MongoClientSettings.builder()
+                    .applyConnectionString(new ConnectionString(gridFsProperties.getServerUri() + "/" + gridFsProperties.getDatabase()))
+                    .build();
+            MongoClient mongoClient = MongoClients.create(settings);
+            GridFSBucket gridFSBucket = GridFSBuckets.create(mongoClient.getDatabase(gridFsProperties.getDatabase()), gridFsProperties.getBucketName());
+
+            GridFsHelper gridFsHelper = new GridFsHelper();
+            gridFsHelper.setGridFsBucket(gridFSBucket);
+
+            File file = new File("/Users/jiangcs/Downloads/1.txt");
+            MultipartFile multipartFile = new MockMultipartFile("file", file.getName(), "text/plain", new FileInputStream(file));
+            FileResult fileResult = gridFsHelper.upload(multipartFile, "test");
             System.out.println(fileResult);
         } catch (Exception e) {
             e.printStackTrace();

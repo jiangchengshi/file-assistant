@@ -3,10 +3,11 @@ description("核心包")
 dependencies {
     implementation("org.springframework.boot:spring-boot-autoconfigure")
     implementation("org.springframework:spring-web")
-    implementation("org.springframework:spring-test")
+
+    implementation("commons-fileupload:commons-fileupload:1.4")
 
     // mongodb
-    implementation("org.mongodb:mongodb-driver:${depVersion.mongodb}")
+    implementation("org.mongodb:mongo-java-driver:${depVersion.mongodb}")
     // aliYun
     implementation("com.aliyun.oss:aliyun-sdk-oss:${depVersion.aliyunOss}")
     // aliYun-dependency
