@@ -5,6 +5,9 @@
     <bean id="localProperties" class="cool.doudou.file.assistant.core.properties.LocalProperties">
         <property name="path" value="./tmp"/>
     </bean>
+    <bean id="gridFsProperties" class="cool.doudou.file.assistant.core.properties.GridFsProperties">
+        <property name="serverUri" value="mongodb://admin:1234.abcd@192.168.0.158:6379"/>
+    </bean>
     <bean id="minIoProperties" class="cool.doudou.file.assistant.core.properties.MinIoProperties">
         <property name="endpoint" value="http://192.168.0.158:9000"/>
         <property name="accessKey" value="test"/>
