@@ -110,7 +110,7 @@ subprojects {
                     developers {
                         developer {
                             id = "jiangcs"
-                            name = "这么难演"
+                            name = "这么诚实"
                             email = "jiangchengshi@gmail.com"
                         }
                     }
