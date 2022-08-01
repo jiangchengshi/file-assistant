@@ -1,5 +1,6 @@
 package cool.doudou.file.assistant.core.util;
 
+import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -37,6 +38,6 @@ public class ComUtil {
      * @throws Exception 异常
      */
     public static MultipartFile file2MultipartFile(File file) throws Exception {
-        return new MockMultipartFile(file.getName(), new FileInputStream(file));
+        return new MockMultipartFile(file.getName(), file.getName(), MediaType.MULTIPART_FORM_DATA_VALUE, new FileInputStream(file));
     }
 }
