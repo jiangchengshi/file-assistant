@@ -41,6 +41,9 @@ public class MinIOHelper implements FileHelper {
 
     @Override
     public FileResult upload(MultipartFile multipartFile, String category) {
+        if (multipartFile == null) {
+            throw new RuntimeException("文件异常");
+        }
         String filename = multipartFile.getOriginalFilename();
         if (filename == null) {
             throw new RuntimeException("文件名称异常");
@@ -50,12 +53,7 @@ public class MinIOHelper implements FileHelper {
             String key = ComUtil.getFileKey(filename, true);
             Map<String, String> userMetadata = new HashMap<>(1);
             userMetadata.put("category", category);
-            PutObjectArgs objectArgs = PutObjectArgs.builder().bucket(minIoProperties.getBucketName())
-                    .object(key)
-                    .stream(multipartFile.getInputStream(), multipartFile.getSize(), -1)
-                    .contentType(multipartFile.getContentType())
-                    .userMetadata(userMetadata)
-                    .build();
+            PutObjectArgs objectArgs = PutObjectArgs.builder().bucket(minIoProperties.getBucketName()).object(key).stream(multipartFile.getInputStream(), multipartFile.getSize(), -1).contentType(multipartFile.getContentType()).userMetadata(userMetadata).build();
             // 文件名称相同会覆盖
             minioClient.putObject(objectArgs);
 
@@ -67,11 +65,14 @@ public class MinIOHelper implements FileHelper {
 
     @Override
     public FileResult upload(File file, String category) {
+        MultipartFile multipartFile;
         try {
-            return upload(ComUtil.file2MultipartFile(file), category);
+            multipartFile = ComUtil.file2MultipartFile(file);
         } catch (Exception e) {
             throw new RuntimeException("文件转换异常");
         }
+
+        return upload(multipartFile, category);
     }
 
     @Override
@@ -82,8 +83,7 @@ public class MinIOHelper implements FileHelper {
     @Override
     public void download(String key, String category, HttpServletResponse response) {
         try {
-            GetObjectArgs objectArgs = GetObjectArgs.builder().bucket(minIoProperties.getBucketName())
-                    .object(key).build();
+            GetObjectArgs objectArgs = GetObjectArgs.builder().bucket(minIoProperties.getBucketName()).object(key).build();
             GetObjectResponse getObjectResponse = minioClient.getObject(objectArgs);
 
             IoUtil.setContentDisposition4Download(response, key);
@@ -101,8 +101,7 @@ public class MinIOHelper implements FileHelper {
     @Override
     public void preview(String key, String category, HttpServletResponse response) {
         try {
-            GetObjectArgs objectArgs = GetObjectArgs.builder().bucket(minIoProperties.getBucketName())
-                    .object(key).build();
+            GetObjectArgs objectArgs = GetObjectArgs.builder().bucket(minIoProperties.getBucketName()).object(key).build();
             GetObjectResponse getObjectResponse = minioClient.getObject(objectArgs);
 
             IoUtil.setContentDisposition4Preview(response, key);
