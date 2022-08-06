@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  cool.doudou.file.assistant.boot.starter.auto.configuration.FileAutoConfiguration
+org.springframework.boot.autoconfigure.EnableAutoConfiguration.exclude=\
+  MongoAutoConfiguration.class,MongoDataAutoConfiguration.class
