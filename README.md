@@ -1,6 +1,6 @@
 # 欢迎使用 File-Assistant
 
-[![Maven](https://img.shields.io/badge/Maven-v2.0.0-blue)](https://search.maven.org/search?q=g:cool.doudou%20a:file-assistant-*)
+[![Maven](https://img.shields.io/badge/Maven-v2.0.1-blue)](https://search.maven.org/search?q=g:cool.doudou%20a:file-assistant-*)
 [![License](https://img.shields.io/badge/License-Apache%202-4EB1BA.svg?style=flat-square)](https://www.apache.org/licenses/LICENSE-2.0)
 ![SpringBoot](https://img.shields.io/badge/SpringBoot-v2.7.2-blue)
 
