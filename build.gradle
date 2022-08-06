@@ -2,7 +2,7 @@
 buildscript {
     ext {
         depVersion = [
-                springBoot: "2.7.2",
+                springBoot: "2.6.10",
                 mongodb   : "3.12.11",
                 aliyunOss : "3.14.0",
                 minIO     : "8.4.3",
@@ -26,7 +26,7 @@ buildscript {
 
 allprojects {
     group = "cool.doudou"
-    version = "2.0.0-SNAPSHOT"
+    version = "1.0.8-SNAPSHOT"
 }
 
 // 子模块配置
