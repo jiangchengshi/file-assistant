@@ -9,6 +9,8 @@ import cool.doudou.file.assistant.core.properties.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration;
+import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
@@ -21,11 +23,11 @@ import org.springframework.context.annotation.Import;
  */
 @EnableConfigurationProperties({FileProperties.class, GridFsProperties.class, AliYunProperties.class, MinIoProperties.class, LocalProperties.class})
 @Import({GridFsConfig.class, AliYunConfig.class, MinIOConfig.class})
-@AutoConfiguration
+@AutoConfiguration(before = {MongoAutoConfiguration.class, MongoDataAutoConfiguration.class})
 public class FileAutoConfiguration {
     private FileProperties fileProperties;
 
-    @ConditionalOnMissingBean
+    @ConditionalOnMissingBean(FileHelper.class)
     @Bean
     public FileHelper fileHelper() {
         switch (StorageModeEnum.getByName(fileProperties.getStorageMode())) {

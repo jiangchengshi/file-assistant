@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * MinIOHelper
+ * MinIO
  *
  * @author jiangcs
  * @since 2022/3/6
