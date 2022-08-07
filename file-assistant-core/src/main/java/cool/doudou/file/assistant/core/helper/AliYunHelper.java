@@ -18,7 +18,7 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * AliYunHelper
+ * 阿里云OSS
  *
  * @author jiangcs
  * @since 2022/3/6
