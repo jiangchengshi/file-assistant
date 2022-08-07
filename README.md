@@ -22,15 +22,19 @@ implementation("cool.doudou:file-assistant-boot-starter:latest")
 
 ### 使用方式
 
-> 上传文件大小，需要引入profiles：file
+> 上传文件默认大小
 
-- 单个文件：50MB
-- 总上传数据：100MB
+- 单个文件：1MB
+- 总上传数据：10MB
 
 ```yaml
 spring:
-  profiles:
-    include: file
+  servlet:
+    multipart:
+      # 设置单个文件大小
+      max-file-size: 50MB
+      # 设置总上传的数据大小
+      max-request-size: 100MB
 ```
 
 > 文件存储方式
