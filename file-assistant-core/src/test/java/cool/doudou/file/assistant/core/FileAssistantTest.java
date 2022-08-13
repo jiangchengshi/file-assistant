@@ -13,16 +13,15 @@ import cool.doudou.file.assistant.core.helper.MinIOHelper;
 import cool.doudou.file.assistant.core.properties.GridFsProperties;
 import cool.doudou.file.assistant.core.properties.LocalProperties;
 import cool.doudou.file.assistant.core.properties.MinIoProperties;
+import cool.doudou.file.assistant.core.util.ComUtil;
 import io.minio.BucketExistsArgs;
 import io.minio.MakeBucketArgs;
 import io.minio.MinioClient;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.io.FileInputStream;
 
 /**
  * FileAssistantTest
@@ -40,7 +39,7 @@ public class FileAssistantTest {
             localHelper.setLocalProperties(applicationContext.getBean("localProperties", LocalProperties.class));
 
             File file = new File("/Users/jiangcs/Downloads/1.txt");
-            MultipartFile multipartFile = new MockMultipartFile("file", file.getName(), "text/plain", new FileInputStream(file));
+            MultipartFile multipartFile = ComUtil.file2MultipartFile(file);
             FileResult fileResult = localHelper.upload(multipartFile, "test");
             System.out.println(fileResult);
         } catch (Exception e) {
@@ -65,7 +64,7 @@ public class FileAssistantTest {
             gridFsHelper.setGridFsBucket(gridFSBucket);
 
             File file = new File("/Users/jiangcs/Downloads/1.txt");
-            MultipartFile multipartFile = new MockMultipartFile("file", file.getName(), "text/plain", new FileInputStream(file));
+            MultipartFile multipartFile = ComUtil.file2MultipartFile(file);
             FileResult fileResult = gridFsHelper.upload(multipartFile, "test");
             System.out.println(fileResult);
         } catch (Exception e) {
@@ -95,7 +94,7 @@ public class FileAssistantTest {
             }
 
             File file = new File("/Users/jiangcs/Downloads/1.txt");
-            MultipartFile multipartFile = new MockMultipartFile("file", file.getName(), "text/plain", new FileInputStream(file));
+            MultipartFile multipartFile = ComUtil.file2MultipartFile(file);
             FileResult fileResult = minIOHelper.upload(multipartFile, "test");
             System.out.println(fileResult);
         } catch (Exception e) {
