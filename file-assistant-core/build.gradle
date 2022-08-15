@@ -3,19 +3,21 @@ description("核心包")
 dependencies {
     implementation("org.springframework.boot:spring-boot-autoconfigure")
     implementation("org.springframework:spring-web")
-
+    
+    // MultipartFile
     implementation("commons-fileupload:commons-fileupload:1.4")
 
     // mongodb
-    implementation("org.mongodb:mongo-java-driver:${depVersion.mongodb}")
+    compileOnly("org.mongodb:mongo-java-driver:${depVersion.mongodb}")
     // aliYun
-    implementation("com.aliyun.oss:aliyun-sdk-oss:${depVersion.aliyunOss}")
+    compileOnly("com.aliyun.oss:aliyun-sdk-oss:${depVersion.aliyunOss}")
+    // minIO
+    compileOnly("io.minio:minio:${depVersion.minIO}")
+
     // aliYun-dependency
     implementation("javax.xml.bind:jaxb-api:2.3.1")
     implementation("javax.activation:activation:1.1.1")
     implementation("org.glassfish.jaxb:jaxb-runtime:2.3.3")
-    // minIO
-    implementation("io.minio:minio:${depVersion.minIO}")
 
     // HttpServletResponse
     compileOnly("javax.servlet:javax.servlet-api:4.0.1")
