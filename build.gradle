@@ -62,6 +62,8 @@ subprojects {
         // lombok
         compileOnly("org.projectlombok:lombok:${depVersion.lombok}")
         annotationProcessor("org.projectlombok:lombok:${depVersion.lombok}")
+
+        testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
     }
 
     task sourcesJar(type: Jar) {
