@@ -1,6 +1,6 @@
 # 欢迎使用 File-Assistant
 
-[![Maven](https://img.shields.io/badge/Maven-v1.0.10-blue)](https://search.maven.org/search?q=g:cool.doudou%20a:file-assistant-*)
+[![Maven](https://img.shields.io/badge/Maven-v1.0.11-blue)](https://search.maven.org/search?q=g:cool.doudou%20a:file-assistant-*)
 [![License](https://img.shields.io/badge/License-Apache%202-4EB1BA.svg?style=flat-square)](https://www.apache.org/licenses/LICENSE-2.0)
 ![SpringBoot](https://img.shields.io/badge/SpringBoot-v2.6.10-blue)
 
@@ -63,6 +63,10 @@ file:
 
 > 依赖spring自动注入MongoClient、GridFSBucket，配置属性如下：
 
+```kotlin
+implementation("org.mongodb:mongo-java-driver:3.12.11")
+```
+
 ```yaml
 file:
   grid-fs:
@@ -75,6 +79,10 @@ file:
 
 > 依赖spring自动注入OSS，配置如下：
 
+```kotlin
+implementation("com.aliyun.oss:aliyun-sdk-oss:3.14.0")
+```
+
 ```yaml
 file:
   ali-yun:
@@ -85,6 +93,12 @@ file:
 ```
 
 #### MinIO配置
+
+> 依赖spring自动注入MinioClient，配置属性如下：
+
+```kotlin
+implementation("io.minio:minio:8.4.3")
+```
 
 ```yaml
 file:
